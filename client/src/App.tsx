@@ -1,23 +1,34 @@
-import { motion } from "framer-motion";
-import { useRef } from "react";
+
+import HomePage from "./pages/HomePage";
+import LoadingPage from "./pages/LoadingPage";
+import Captcha from "./pages/Captcha";
+import CartPage from "./pages/CartPage";
 
 export default function App() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const path = window.location.pathname;
+
+  if (path === "/" || path === "/homepage") {
+    return <HomePage />;
+  }
+
+  if (path === "/loading") {
+    return <LoadingPage onEnterStore={() => window.location.assign("/captcha")} />;
+  }
+
+  if (path === "/captcha") {
+    return <Captcha onSuccess={() => undefined} />;
+  }
+
+  if (path === "/cart") {
+    return <CartPage />;
+  }
 
   return (
-    <div
-      ref={containerRef}
-      className="w-[500px] h-[400px] border"
-    >
-      <motion.div
-  drag
-  dragElastic={0.5}
-  dragTransition={{
-    bounceStiffness: 300,
-    bounceDamping: 20,
-  }}
-  className="w-24 h-24 bg-blue-500 rounded-xl"
-/>
-    </div>
+    <main className="grid min-h-screen place-items-center bg-[#16001f] p-8 text-center text-white">
+      <div>
+        <h1 className="text-6xl font-black">404</h1>
+        <p className="mt-3 text-xl">This page was probably out of stock.</p>
+      </div>
+    </main>
   );
 }
